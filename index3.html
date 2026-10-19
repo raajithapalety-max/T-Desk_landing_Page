@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="T-Desk helps real estate professionals organize transactions, track compliance, and manage property workflows.">
+    <title>T-Desk | Real Estate Transaction Management</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Hero authentication panel */
+        .hero-auth {
+            width: 100%;
+            max-width: 440px;
+            margin-left: auto;
+        }
+
+        .auth-card {
+            padding: 30px;
+            background: #ffffff;
+            border: 1px solid #e7e7e7;
+            border-radius: 18px;
+            box-shadow: 0 18px 55px rgba(20, 20, 20, 0.09);
+        }
+
+        .auth-card .auth-eyebrow {
+            display: inline-block;
+            color: #b91c1c;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        .auth-card h2 {
+            margin: 12px 0 8px;
+            color: #171717;
+            font-size: clamp(24px, 3vw, 30px);
+            line-height: 1.2;
+        }
+
+        .auth-description {
+            margin: 0 0 22px;
+            color: #666666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .auth-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+            padding: 5px;
+            margin-bottom: 22px;
+            background: #f4f4f5;
+            border-radius: 10px;
+        }
+
+        .auth-tab {
+            padding: 11px 14px;
+            border: 0;
+            border-radius: 7px;
+            background: transparent;
+            color: #555555;
+            font: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .auth-tab.active {
+            background: #b91c1c;
+            color: #ffffff;
+            box-shadow: 0 2px 6px rgba(185, 28, 28, 0.18);
+        }
+
+        .auth-form[hidden] {
+            display: none !important;
+        }
+
+        .auth-form label {
+            display: block;
+            margin: 15px 0 7px;
+            color: #262626;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .auth-form input {
+            box-sizing: border-box;
+            width: 100%;
+            min-height: 45px;
+            padding: 11px 12px;
+            border: 1px solid #d7d7d7;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #171717;
+            font: inherit;
+            font-size: 14px;
+        }
+
+        .auth-form input:focus {
+            border-color: #b91c1c;
+            outline: 2px solid rgba(185, 28, 28, 0.14);
+        }
+
+        .auth-options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 13px;
+            font-size: 12px;
+        }
+
+        .auth-options label {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin: 0;
+            font-weight: 400;
+        }
+
+        .auth-options input[type="checkbox"] {
+            width: 14px;
+            min-height: 14px;
+            margin: 0;
+            accent-color: #b91c1c;
+        }
+
+        .auth-card a {
+            color: #b91c1c;
+            text-decoration: none;
+        }
+
+        .auth-card a:hover {
+            text-decoration: underline;
+        }
+
+        .auth-submit {
+            width: 100%;
+            margin-top: 21px;
+            cursor: pointer;
+        }
+
+        .auth-footer {
+            margin: 20px 0 0;
+            color: #666666;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .auth-switch {
+            padding: 0;
+            border: 0;
+            background: none;
+            color: #b91c1c;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .auth-message {
+            margin: 12px 0 0;
+            color: #555555;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 900px) {
+            .hero-auth {
+                max-width: 520px;
+                margin: 32px auto 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .auth-card {
+                padding: 22px;
+                border-radius: 14px;
+            }
+
+            .auth-options {
+                align-items: flex-start;
+            }
+        }
+
+
+        /* Hero: keep the main headline on the left and authentication on the right. */
+        .hero .hero-content {
+            display: grid !important;
+            grid-template-columns: minmax(0, 1.08fr) minmax(390px, 0.92fr);
+            align-items: center;
+            gap: clamp(32px, 5vw, 72px);
+            width: min(100% - 48px, 1240px);
+            margin: 0 auto;
+        }
+        .hero .hero-copy { min-width: 0; }
+        .hero .hero-auth {
+            width: 100%;
+            max-width: 610px;
+            min-width: 0;
+            margin: 0 0 0 auto;
+            justify-self: end;
+        }
+        .hero .login-card {
+            box-sizing: border-box;
+            width: 100%;
+            padding: clamp(30px, 4vw, 48px) clamp(26px, 4vw, 48px);
+            background: #fff;
+            border: 1px solid #e1e5ec;
+            border-top: 5px solid #e3190b;
+            border-radius: 24px;
+            box-shadow: 0 20px 55px rgba(40, 20, 20, .08);
+        }
+        .login-field { margin-bottom: 9px; }
+        .login-field label {
+            display: block;
+            margin: 12px 0;
+            color: #363636;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .input-box {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-height: 60px;
+            padding: 0 16px;
+            border: 1px solid #ffc4c4;
+            border-radius: 14px;
+            background: #fff;
+            transition: border-color .2s ease, box-shadow .2s ease;
+        }
+        .input-box:focus-within {
+            border-color: #e3190b;
+            box-shadow: 0 0 0 3px rgba(227, 25, 11, .08);
+        }
+        .input-icon { color: #999; font-size: 21px; flex-shrink: 0; }
+        .input-box input {
+            box-sizing: border-box;
+            width: 100%; min-width: 0;
+            padding: 12px 0; border: 0; outline: 0;
+            background: transparent; color: #292929; font: inherit; font-size: 16px;
+        }
+        .input-box input::placeholder { color: #aaa; }
+        .password-toggle {
+            flex-shrink: 0; padding: 5px; border: 0; background: transparent;
+            color: #777; cursor: pointer; font-size: 20px;
+        }
+        .auth-remember {
+            display: flex; align-items: center; gap: 8px;
+            margin-top: 13px; color: #555; font-size: 13px;
+        }
+        .auth-remember input { accent-color: #e3190b; }
+        .auth-card-link { color: #e3190b; text-decoration: none; }
+        .auth-card-link:hover { text-decoration: underline; }
+        .login-submit {
+            display: block; width: 225px; max-width: 100%; min-height: 55px;
+            margin: 32px auto 0; border: 1px solid #e3190b; border-radius: 5px;
+            background: #fff; color: #e3190b; font-size: 16px; font-weight: 600;
+            cursor: pointer; transition: background .2s ease, color .2s ease;
+        }
+        .login-submit:hover { background: #e3190b; color: #fff; }
+        .login-links {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 15px; margin-top: 42px;
+        }
+        .login-links a { color: #e3190b; font-size: 15px; font-weight: 600; text-decoration: none; }
+        .login-links a:first-child { color: #ff8585; }
+        .login-links a:hover { text-decoration: underline; }
+        .login-message { margin: 12px 0 0; color: #666; font-size: 12px; line-height: 1.5; }
+        #signupForm h2 { margin: 0 0 18px; color: #222; font-size: 25px; }
+        #signupForm .login-links { margin-top: 25px; }
+        @media (max-width: 1000px) {
+            .hero .hero-content { grid-template-columns: minmax(0, 1fr) minmax(320px, .9fr); gap: 30px; }
+            .hero .login-card { padding: 32px 26px; }
+            .login-links { margin-top: 30px; }
+        }
+        @media (max-width: 760px) {
+            .hero .hero-content { grid-template-columns: minmax(0, 1fr); gap: 35px; width: min(100% - 32px, 620px); }
+            .hero .hero-auth { max-width: 520px; justify-self: center; margin: 0 auto; }
+            .hero .login-card { padding: 30px 24px; border-radius: 18px; }
+        }
+        @media (max-width: 400px) {
+            .hero .login-card { padding: 24px 18px; }
+            .login-links a { font-size: 13px; }
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="container nav-content">
+            <a class="logo" href="#home" aria-label="T-Desk home">
+                <img src="dtesk logo.png" alt="T-Desk Logo" height="60" width="60">
+                T-Desk
+            </a>
+
+            <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+                <a href="#features">Features</a>
+                <a href="#products">Products</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <a href="#clients">Clients</a>
+            </nav>
+
+            <div>
+                <a class="button primary-button nav-demo" href="#contact">Schedule Demo</a>
+                <button class="menu-button" id="menuButton" type="button"
+                    aria-label="Open navigation" aria-expanded="false">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero section -->
+        <section class="hero" id="home">
+            <div class="container hero-content">
+                <div class="hero-copy">
+                    <span class="small-title">Built by real estate professionals</span>
+
+                    <h1>
+                        Your real estate operations,
+                        <span class="hero-highlight">perfected for clarity, compliance, and control.</span>
+                    </h1>
+
+                    <p class="intro-text">
+                        T-Desk helps real estate professionals manage transactions,
+                        coordinate teams, track compliance, and keep work moving
+                        with greater clarity and control.
+                    </p>
+
+                    <div class="hero-buttons">
+                        <a class="button primary-button" href="#contact">Schedule a Demo</a>
+                        <a class="button secondary-button" href="#products">Explore the Platform</a>
+                    </div>
+
+                    <p class="hero-note">
+                        <strong>✓</strong> Organize transactions &nbsp;
+                        <strong>✓</strong> Stay compliant &nbsp;
+                        <strong>✓</strong> Keep work moving
+                    </p>
+
+                    <div class="proof-points">
+                        <span>Made for real estate</span>
+                        <span>Clear workflows</span>
+                        <span>Team-ready tools</span>
+                    </div>
+                </div>
+
+                <!-- Login / signup card in the right side of the hero -->
+                <div class="hero-auth">
+                    <div class="login-card">
+                        <form id="loginForm">
+                            <div class="login-field">
+                                <label for="loginEmail">Email Address</label>
+                                <div class="input-box">
+                                    <span class="input-icon" aria-hidden="true">✉</span>
+                                    <input type="email" id="loginEmail" name="email"
+                                        placeholder="Email" autocomplete="email" required>
+                                </div>
+                            </div>
+
+                            <div class="login-field">
+                                <label for="loginPassword">Password</label>
+                                <div class="input-box">
+                                    <span class="input-icon" aria-hidden="true">♙</span>
+                                    <input type="password" id="loginPassword" name="password"
+                                        placeholder="Password" autocomplete="current-password" required>
+                                    <button type="button" class="password-toggle" id="togglePassword"
+                                        aria-label="Show password">◎</button>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="login-submit">Sign In</button>
+                            <div class="login-links">
+                                <a href="/forgot-password">Forgot password?</a>
+                                <a href="/signup" id="showSignup">Sign Up</a>
+                            </div>
+                            <p class="login-message" id="loginMessage" role="status" aria-live="polite"></p>
+                        </form>
+
+                        <form id="signupForm" hidden>
+                            <h2>Create your T-Desk account</h2>
+                            <div class="login-field">
+                                <label for="signupName">Full Name</label>
+                                <div class="input-box">
+                                    <input type="text" id="signupName" name="name"
+                                        placeholder="Full Name" autocomplete="name" required>
+                                </div>
+                            </div>
+                            <div class="login-field">
+                                <label for="signupEmail">Email Address</label>
+                                <div class="input-box">
+                                    <input type="email" id="signupEmail" name="email"
+                                        placeholder="Email" autocomplete="email" required>
+                                </div>
+                            </div>
+                            <div class="login-field">
+                                <label for="signupPassword">Password</label>
+                                <div class="input-box">
+                                    <input type="password" id="signupPassword" name="password"
+                                        placeholder="Create password" autocomplete="new-password"
+                                        minlength="8" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="login-submit">Sign Up</button>
+                            <div class="login-links">
+                                <a href="#" id="showLogin">Back to Sign In</a>
+                            </div>
+                            <p class="login-message" id="signupMessage" role="status" aria-live="polite"></p>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Main features -->
+        <section class="section" id="whats-new">
+            <div class="container">
+                <div class="section-heading center">
+                    <span class="small-title">One connected experience</span>
+                    <h2>Everything your real estate workflow needs.</h2>
+                    <p>From transaction milestones to property offers, the tools are organized around the work your team does every day.</p>
+                </div>
+
+                <div class="feature-grid">
+                    <article class="feature-card">
+                        <div class="icon-box">↗</div>
+                        <h3>Streamlined Workflows</h3>
+                        <p>Manage transactions with clear steps and organized tasks.</p>
+                        <ul class="check-list">
+                            <li>Transaction phases</li>
+                            <li>Phase milestones</li>
+                            <li>Automated dependencies</li>
+                            <li>Timely communication</li>
+                        </ul>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="icon-box">✓</div>
+                        <h3>Integrated Compliance</h3>
+                        <p>Keep important requirements and documents easy to track.</p>
+                        <ul class="check-list">
+                            <li>Property-based workflows</li>
+                            <li>Disclosures wizard</li>
+                            <li>Pending document tracking</li>
+                            <li>Audit reminders</li>
+                        </ul>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="icon-box">▥</div>
+                        <h3>Data-Driven Insights</h3>
+                        <p>Check progress and understand team performance.</p>
+                        <ul class="check-list">
+                            <li>Milestone tracking</li>
+                            <li>Compliance reports</li>
+                            <li>Account statistics</li>
+                            <li>Performance analysis</li>
+                        </ul>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="icon-box">♧</div>
+                        <h3>Collaboration</h3>
+                        <p>Help everyone stay informed about the next step.</p>
+                        <ul class="check-list">
+                            <li>Secure access control</li>
+                            <li>Shared transactions</li>
+                            <li>Team notes</li>
+                            <li>Team alerts</li>
+                        </ul>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="icon-box">☏</div>
+                        <h3>Support and Guidance</h3>
+                        <p>Find help and guidance while working through a transaction.</p>
+                        <ul class="check-list">
+                            <li>Knowledge-base articles</li>
+                            <li>T-Desk support</li>
+                            <li>Transaction guides</li>
+                            <li>Checklists and AI chatbot</li>
+                        </ul>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="icon-box">⌂</div>
+                        <h3>Property and Offer Workflows</h3>
+                        <p>Manage property information and offer decisions.</p>
+                        <ul class="check-list">
+                            <li>Property details</li>
+                            <li>Submit and review offers</li>
+                            <li>Accept or reject offers</li>
+                            <li>Shareable links</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product information -->
+        <section class="section soft-section" id="products">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="small-title">Meet the applications</span>
+                    <h2>Tools for each stage of the real estate process.</h2>
+                    <p>Use each application for the work it is designed to support.</p>
+                </div>
+
+                <div class="product-list">
+                    <article class="product-card">
+                        <div>
+                            <span class="small-title">Transaction management</span>
+                            <h3>T-Desk</h3>
+                            <div class="product-subtitle">Keep every transaction on track.</div>
+                            <p>Organize listing and buyer transactions, follow milestones, manage compliance, track documents, and help your team move toward closing with confidence.</p>
+                            <ul class="check-list">
+                                <li>Transaction phases and milestones</li>
+                                <li>Automated dependencies and communication</li>
+                                <li>Disclosures and pending documents</li>
+                                <li>Compliance checks and documentation</li>
+                                <li>Reports and performance insights</li>
+                                <li>Team collaboration and access control</li>
+                                <li>Support resources and AI chatbot</li>
+                            </ul>
+                            <div style="margin-top: 20px">
+                                <a class="button primary-button" href="#contact">Explore T-Desk →</a>
+                            </div>
+                        </div>
+
+                        <div class="product-preview">
+                            <div class="dashboard-title">Transaction timeline <span class="mini-button">View all</span></div>
+                            <div class="stats">
+                                <div class="stat"><small>Transactions</small><strong>128</strong></div>
+                                <div class="stat"><small>Due this week</small><strong>12</strong></div>
+                                <div class="stat"><small>Completed</small><strong>64</strong></div>
+                            </div>
+                            <div class="deal-list">
+                                <h4>Milestone checklist</h4>
+                                <div class="deal"><b>Open escrow</b><span>Completed</span><span class="done">✓ Done</span></div>
+                                <div class="deal"><b>Disclosure package</b><span>In review</span><span class="pending">Pending</span></div>
+                                <div class="deal"><b>Closing documents</b><span>Upcoming</span><span>—</span></div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-preview">
+                            <div class="property-row">
+                                <div class="house-icon">⌂</div>
+                                <div>
+                                    <strong>Property details</strong>
+                                    <small>Property overview · Documents · Offers</small>
+                                    <strong style="color: var(--red)">Property workspace</strong>
+                                </div>
+                            </div>
+                            <div class="offer-row"><strong>Offer #1042</strong><span>$820,000 <span class="status waiting">Pending</span></span></div>
+                            <div class="offer-row"><strong>Offer #1043</strong><span>$840,000 <span class="status">Accepted</span></span></div>
+                            <div class="offer-row"><strong>Offer #1044</strong><span>$810,000 <span class="status rejected">Rejected</span></span></div>
+                        </div>
+
+                        <div>
+                            <span class="small-title">Property and offer management</span>
+                            <h3>Dock</h3>
+                            <div class="product-subtitle">Make property offers easier to manage.</div>
+                            <p>Give participants a clear place to view property details, submit offers, review offer status, and share links with the right people.</p>
+                            <ul class="check-list">
+                                <li>Property details and listing information</li>
+                                <li>Offer submission</li>
+                                <li>Offer review and status updates</li>
+                                <li>Accept or reject offers</li>
+                                <li>Shareable property or offer links</li>
+                                <li>Clearer communication between participants</li>
+                            </ul>
+                            <div style="margin-top: 20px">
+                                <a class="button primary-button" href="#contact">Explore Dock →</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+      
+
+        <!-- User roles -->
+        <section class="section soft-section" id="roles">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="small-title">Built for real estate roles</span>
+                    <h2>Tools for the people moving each deal forward.</h2>
+                    <p>Find the workflow that best matches your responsibilities.</p>
+                </div>
+
+                <div class="roles-grid">
+                    <article class="role-card">
+                        <div class="icon-box">♙</div>
+                        <h3>Agents and Teams</h3>
+                        <p>Organize teams, assign roles, and monitor performance with shared controls and reports.</p>
+                    </article>
+                    <article class="role-card">
+                        <div class="icon-box">▣</div>
+                        <h3>Transaction Managers</h3>
+                        <p>Oversee multiple deals, allocate resources, and help transactions move smoothly.</p>
+                    </article>
+                    <article class="role-card">
+                        <div class="icon-box">✓</div>
+                        <h3>Transaction Coordinators</h3>
+                        <p>Keep track of deadlines, documents, milestones, and compliance requirements.</p>
+                    </article>
+                    <article class="role-card">
+                        <div class="icon-box">⌂</div>
+                        <h3>Property and Offer Participants</h3>
+                        <p>View property details, submit offers, and follow offer decisions.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing -->
+        <section class="section" id="pricing">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="small-title">Plans</span>
+                    <h2>A plan for every stage of growth.</h2>
+                    <p>Compare the available features and contact the team for current pricing.</p>
+                </div>
+
+                <div class="price-grid">
+                    <article class="price-card">
+                        <h3>Basic</h3>
+                        <p class="audience">Solo transaction coordinators</p>
+                        <div class="plan-name">Basic plan</div>
+                        <ul class="check-list">
+                            <li>1 login</li>
+                            <li>Up to 100 transactions per year</li>
+                            <li>Transactions and contacts</li>
+                            <li>Disclosure status</li>
+                            <li>Transaction timeline</li>
+                            <li>Basic T-Desk support</li>
+                        </ul>
+                        <a class="button secondary-button" href="#contact">Sign Up</a>
+                    </article>
+
+                    <article class="price-card featured">
+                        <span class="popular-label">Most Popular</span>
+                        <h3>Standard</h3>
+                        <p class="audience">Teams managing 100+ deals</p>
+                        <div class="plan-name">Standard plan</div>
+                        <ul class="check-list">
+                            <li>2 logins</li>
+                            <li>Up to 200 transactions per year</li>
+                            <li>Transactions, contacts, and tasks</li>
+                            <li>Disclosure status</li>
+                            <li>Contract summary</li>
+                            <li>Brokerage and agent reports</li>
+                            <li>Standard T-Desk support</li>
+                        </ul>
+                        <a class="button primary-button" href="#contact">Sign Up</a>
+                    </article>
+
+                    <article class="price-card">
+                        <h3>Advanced</h3>
+                        <p class="audience">Large teams and brokerages</p>
+                        <div class="plan-name">Advanced plan</div>
+                        <ul class="check-list">
+                            <li>5 logins</li>
+                            <li>Unlimited transactions per year</li>
+                            <li>Transactions, contacts, and tasks</li>
+                            <li>Disclosure status and contract summary</li>
+                            <li>Advanced analytics and reporting</li>
+                            <li>Premium T-Desk support</li>
+                        </ul>
+                        <a class="button secondary-button" href="#contact">Sign Up</a>
+                    </article>
+                </div>
+
+                <p class="price-note">Contact the T-Desk team to confirm current pricing, plan limits, and whether Dock is included in each plan.</p>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="section soft-section" id="about">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="small-title">Why T-Desk</span>
+                    <h2>A clearer answer to real estate's operational hurdles.</h2>
+                    <p>Real estate work involves changing market conditions, strict requirements, tight deadlines, and regular communication. T-Desk helps teams organize the work behind a successful closing.</p>
+                </div>
+
+                <div class="challenge-grid">
+                    <article class="problem-card">
+                        <h3>Operational hurdles</h3>
+                        <div class="challenge-item">
+                            <div class="challenge-icon">↗</div>
+                            <div><strong>Market changes</strong><p>Changing market conditions can require updates to terms and agreements.</p></div>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-icon">!</div>
+                            <div><strong>Compliance requirements</strong><p>DRE and brokerage requirements need careful attention.</p></div>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-icon">◷</div>
+                            <div><strong>Deadlines</strong><p>Teams need to keep milestones and tasks on schedule.</p></div>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-icon">↔</div>
+                            <div><strong>Communication</strong><p>Timely updates help everyone understand the next step.</p></div>
+                        </div>
+                    </article>
+
+                    <article class="problem-card solution-card">
+                        <h3>A more organized way forward</h3>
+                        <div class="challenge-item">
+                            <div class="challenge-icon">✓</div>
+                            <div><strong>Purpose-built workflows</strong><p>Keep transactions, milestones, and responsibilities organized in T-Desk.</p></div>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-icon">✓</div>
+                            <div><strong>Compliance visibility</strong><p>Track disclosures, pending documents, and transaction requirements.</p></div>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-icon">✓</div>
+                            <div><strong>Property and offer clarity</strong><p>Organize property details and offer decisions.</p></div>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-icon">✓</div>
+                            <div><strong>Team alignment</strong><p>Give teams clear information about progress and pending work.</p></div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Clients and contact -->
+        <section class="section" id="clients">
+            <div class="container client-demo">
+                <article class="client-panel">
+                    <span class="small-title">Our clients</span>
+                    <h2>Proudly serving real estate professionals.</h2>
+                   
+
+                    <div class="client-logo">
+                        <div class="client-logo-mark">TMS</div>
+                        <div>
+                            <strong>TMS – Transaction Management Services</strong>
+                            <small>California</small>
+                        </div>
+                    </div>
+
+                    
+                </article>
+
+                <article class="demo-panel" id="contact">
+                    <span class="small-title">Let's talk</span>
+                    <h2>Schedule a personalized demo.</h2>
+                    <p>Tell us a little about your needs and our team can follow up with the right information.</p>
+
+                    <form id="demoForm">
+                        <div class="form-grid">
+                            <div class="form-field">
+                                <label for="firstName">First name *</label>
+                                <input type="text" id="firstName" name="firstName" placeholder="Enter first name" required>
+                            </div>
+                            <div class="form-field">
+                                <label for="lastName">Last name *</label>
+                                <input type="text" id="lastName" name="lastName" placeholder="Enter last name" required>
+                            </div>
+                            <div class="form-field">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                            </div>
+                            <div class="form-field">
+                                <label for="subject">Subject *</label>
+                                <select id="subject" name="subject" required>
+                                    <option value="">Select a subject</option>
+                                    <option>T-Desk demo</option>
+                                    <option>Dock demo</option>
+                                    <option>Both applications</option>
+                                    <option>Pricing and plans</option>
+                                    <option>General enquiry</option>
+                                </select>
+                            </div>
+                            <div class="form-field full">
+                                <label for="message">Message *</label>
+                                <textarea id="message" name="message" placeholder="How can we help you?" required></textarea>
+                            </div>
+                            <div class="form-field full">
+                                <button class="button primary-button" type="submit">Send Request →</button>
+                                <p class="form-message" id="formMessage" role="status"></p>
+                            </div>
+                        </div>
+                    </form>
+                </article>
+            </div>
+        </section>
+
+        <!-- Final call to action -->
+        <section class="section soft-section">
+            <div class="container final-call">
+                <div>
+                    <span class="small-title">Ready to get started?</span>
+                    <h2>Bring more clarity to every deal.</h2>
+                    <p class="intro-text">See how T-Desk can support your real estate workflows.</p>
+                </div>
+                <a class="button primary-button" href="#contact">Schedule Demo →</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <a class="logo" href="#home"><span class="logo-box">T</span>T-Desk</a>
+                    <p>A real estate transaction management platform designed to help teams organize transactions, collaborate, and keep work moving with clarity and control.</p>
+                </div>
+
+                <div>
+                    <h4>Product</h4>
+                    <div class="footer-links">
+                        <a href="#features">Features</a>
+                        <a href="#products">Products</a>
+                        <a href="#pricing">Pricing</a>
+                        <a href="#contact">Schedule Demo</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>Company</h4>
+                    <div class="footer-links">
+                        <a href="#about">About</a>
+                        <a href="#contact">Contact</a>
+                        <a href="#clients">Clients</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>Resources</h4>
+                    <div class="footer-links">
+                        <a href="#features">Support and Guides</a>
+                        <a href="#roles">Who We Serve</a>
+                        <a href="#contact">Get in Touch</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>© 2026 T-Desk. All rights reserved.</span>
+                <span><a href="#">Terms of Service</a> · <a href="#">Privacy Policy</a></span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        const loginForm = document.getElementById("loginForm");
+        const signupForm = document.getElementById("signupForm");
+        const showSignup = document.getElementById("showSignup");
+        const showLogin = document.getElementById("showLogin");
+        const password = document.getElementById("loginPassword");
+        const togglePassword = document.getElementById("togglePassword");
+
+        showSignup.addEventListener("click", function (event) {
+            event.preventDefault();
+            loginForm.hidden = true;
+            signupForm.hidden = false;
+        });
+
+        showLogin.addEventListener("click", function (event) {
+            event.preventDefault();
+            signupForm.hidden = true;
+            loginForm.hidden = false;
+        });
+
+        togglePassword.addEventListener("click", function () {
+            const show = password.type === "password";
+            password.type = show ? "text" : "password";
+            togglePassword.setAttribute("aria-label", show ? "Hide password" : "Show password");
+            togglePassword.textContent = show ? "◉" : "◎";
+        });
+
+        loginForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            document.getElementById("loginMessage").textContent =
+                "Connect this form to T-Desk's existing login API to enable sign in.";
+        });
+
+        signupForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            document.getElementById("signupMessage").textContent =
+                "Connect this form to T-Desk's existing signup API to create accounts.";
+        });
+    </script>
+</body>
+</html>
